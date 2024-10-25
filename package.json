@@ -1,0 +1,19 @@
+{
+  "name": "fer-web2-p1-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lesdominik/fer-web2-p1-auth.git"
+  },
+  "author": "Dominik Leš",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lesdominik/fer-web2-p1-auth/issues"
+  },
+  "homepage": "https://github.com/lesdominik/fer-web2-p1-auth#readme"
+}
