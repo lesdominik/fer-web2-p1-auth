@@ -17,6 +17,7 @@
 	},
 	"homepage": "https://github.com/lesdominik/fer-web2-p1-auth#readme",
 	"dependencies": {
+		"ejs": "^3.1.10",
 		"express": "^4.21.1"
 	}
 }
