@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/lesdominik/fer-web2-p1-auth/issues"
   },
-  "homepage": "https://github.com/lesdominik/fer-web2-p1-auth#readme"
+  "homepage": "https://github.com/lesdominik/fer-web2-p1-auth#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }
