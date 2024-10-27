@@ -43,3 +43,16 @@ exports.createNewTicket = async function (vatin, firstName, lastName) {
 		throw error;
 	}
 };
+
+exports.getTicket = async function (id) {
+	try {
+		const result = await pool.query(
+			`SELECT * FROM ${process.env.DB_TABLE_NAME} WHERE id = $1`,
+			[id]
+		);
+		return result.rows[0];
+	} catch (error) {
+		console.error('Error getting ticket with given id:', error);
+		throw error;
+	}
+};

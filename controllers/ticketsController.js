@@ -47,3 +47,21 @@ exports.generateNewTicket = async function (req, res, next) {
 
 	//ako je sve okej onda pošalji na model i dohvati uuid i iz njega izgeneriraj qr kod
 };
+
+exports.getTicket = async function (req, res, next) {
+	let id = req.params.id;
+
+	try {
+		const ticket = await model.getTicket(id);
+
+		if (!ticket) {
+			return res.send('no ticket with given id.');
+		}
+
+		return res.send(ticket);
+	} catch (error) {
+		return res.status(500).json({
+			error: 'Error occured while getting ticket with given id',
+		});
+	}
+};
