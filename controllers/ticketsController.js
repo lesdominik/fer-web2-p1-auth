@@ -1,3 +1,5 @@
+var model = require('../models/ticketsModel');
+
 exports.generateNewTicket = function (req, res, next) {
 	const { vatin, firstName, lastName } = req.body;
 
@@ -13,6 +15,9 @@ exports.generateNewTicket = function (req, res, next) {
 			description: 'OIB consists of 11 digits.',
 		});
 	}
+
+	// model.createNewTicket(vatin, firstName, lastName);
+	model.getTotalRowCount();
 
 	//provjeri s modelom postoje li već 3 ulaznice s istim OIB-om
 
