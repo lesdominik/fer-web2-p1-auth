@@ -16,17 +16,18 @@ exports.getTotalRowCount = async function () {
 
 exports.createNewTicket = async function (vatin, firstName, lastName) {
 	try {
-		// Insert data into the database
-		await pool.query(
-			`INSERT INTO ${process.env.DB_TABLE_NAME} (vatin, firstName, lastName) VALUES ($1, $2, $3)`,
+		const result = await pool.query(
+			`INSERT INTO ${process.env.DB_TABLE_NAME} (vatin, firstName, lastName) VALUES ($1, $2, $3) RETURNING id`,
 			[vatin, firstName, lastName]
 		);
+
+		const generatedUUID = result.rows[0].id;
+		console.log(`Inserted ticket with UUID: ${generatedUUID}`);
 
 		console.log('Data imported successfully!');
 	} catch (error) {
 		console.error('Error importing data:', error);
 	} finally {
-		// Close the database connection
 		await pool.end();
 	}
 };

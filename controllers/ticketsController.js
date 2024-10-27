@@ -16,7 +16,7 @@ exports.generateNewTicket = function (req, res, next) {
 		});
 	}
 
-	// model.createNewTicket(vatin, firstName, lastName);
+	model.createNewTicket(vatin, firstName, lastName);
 	model.getTotalRowCount();
 
 	//provjeri s modelom postoje li već 3 ulaznice s istim OIB-om
