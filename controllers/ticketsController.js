@@ -12,8 +12,7 @@ exports.generateNewTicket = async function (req, res, next) {
 	} else if (!/^\d{11}$/.test(vatin)) {
 		return res.status(400).json({
 			error: 'Invalid OIB format.',
-			description:
-				'OIB consists of 11 digits. You entered one or more non-digit characters.',
+			description: 'OIB consists of 11 digits.',
 		});
 	}
 
@@ -28,19 +27,23 @@ exports.generateNewTicket = async function (req, res, next) {
 			});
 		}
 	} catch (error) {
-		return res.status(500).json({ error: 'Error checking vatin count' });
+		return res.status(500).json({
+			error: 'Error occured while checking given vatin row count',
+		});
 	}
 
-	const generatedUUID = await model.createNewTicket(
-		vatin,
-		firstName,
-		lastName
-	);
-	res.send(generatedUUID);
-
-	// model.getTotalRowCount();
+	try {
+		const generatedUUID = await model.createNewTicket(
+			vatin,
+			firstName,
+			lastName
+		);
+		res.send(generatedUUID);
+	} catch (error) {
+		return res
+			.status(500)
+			.json({ error: 'Error occured while importing data' });
+	}
 
 	//ako je sve okej onda pošalji na model i dohvati uuid i iz njega izgeneriraj qr kod
-	// console.log(req.body);
-	// res.send('Sve je okej!');
 };
