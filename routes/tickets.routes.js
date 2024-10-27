@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var controller = require('../controllers/ticketsController');
 
-router.post('/generate-new', function (req, res, next) {
-	console.log(req.body);
-	res.send('Post radi!');
-});
+router.post('/generate-new', controller.generateNewTicket);
 
 module.exports = router;
