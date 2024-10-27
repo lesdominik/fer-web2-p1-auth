@@ -14,6 +14,19 @@ exports.getTotalRowCount = async function () {
 	}
 };
 
+exports.getVatinRowCount = async function (vatin) {
+	try {
+		const result = await pool.query(
+			`SELECT COUNT(*) AS count FROM ${process.env.DB_TABLE_NAME} WHERE vatin = $1`,
+			[vatin]
+		);
+		return parseInt(result.rows[0].count, 10); // Convert count to a number
+	} catch (error) {
+		console.error('Error checking row count:', error);
+		throw error; // Rethrow the error to be handled upstream
+	}
+};
+
 exports.createNewTicket = async function (vatin, firstName, lastName) {
 	try {
 		const result = await pool.query(
@@ -25,9 +38,8 @@ exports.createNewTicket = async function (vatin, firstName, lastName) {
 		console.log(`Inserted ticket with UUID: ${generatedUUID}`);
 
 		console.log('Data imported successfully!');
+		return generatedUUID;
 	} catch (error) {
 		console.error('Error importing data:', error);
-	} finally {
-		await pool.end();
 	}
 };

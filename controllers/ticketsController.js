@@ -1,6 +1,6 @@
 var model = require('../models/ticketsModel');
 
-exports.generateNewTicket = function (req, res, next) {
+exports.generateNewTicket = async function (req, res, next) {
 	const { vatin, firstName, lastName } = req.body;
 
 	if (!vatin || !firstName || !lastName) {
@@ -12,17 +12,35 @@ exports.generateNewTicket = function (req, res, next) {
 	} else if (!/^\d{11}$/.test(vatin)) {
 		return res.status(400).json({
 			error: 'Invalid OIB format.',
-			description: 'OIB consists of 11 digits.',
+			description:
+				'OIB consists of 11 digits. You entered one or more non-digit characters.',
 		});
 	}
 
-	model.createNewTicket(vatin, firstName, lastName);
-	model.getTotalRowCount();
+	try {
+		const count = await model.getVatinRowCount(vatin);
 
-	//provjeri s modelom postoje li već 3 ulaznice s istim OIB-om
+		if (count >= 3) {
+			return res.status(400).json({
+				error: 'The maximum number of tickets with that OIB has been reached.',
+				description:
+					'It is possible to generate a maximum of 3 tickets with the same OIB.',
+			});
+		}
+	} catch (error) {
+		return res.status(500).json({ error: 'Error checking vatin count' });
+	}
+
+	const generatedUUID = await model.createNewTicket(
+		vatin,
+		firstName,
+		lastName
+	);
+	res.send(generatedUUID);
+
+	// model.getTotalRowCount();
 
 	//ako je sve okej onda pošalji na model i dohvati uuid i iz njega izgeneriraj qr kod
-	console.log(req.body);
-	console.log('sve je okej s ulaznim jsonom');
-	res.send('Sve je okej!');
+	// console.log(req.body);
+	// res.send('Sve je okej!');
 };
