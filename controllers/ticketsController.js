@@ -1,4 +1,5 @@
 var model = require('../models/ticketsModel');
+const QRCode = require('qrcode');
 
 exports.generateNewTicket = async function (req, res, next) {
 	const { vatin, firstName, lastName } = req.body;
@@ -38,14 +39,20 @@ exports.generateNewTicket = async function (req, res, next) {
 			firstName,
 			lastName
 		);
-		res.send(generatedUUID);
+		const url = `https://fer-web2-p1-auth.onrender.com/tickets/${generatedUUID}`;
+
+		try {
+			res.setHeader('Content-Type', 'image/png');
+			await QRCode.toFileStream(res, url);
+		} catch (error) {
+			console.error('Error generating QR code:', error);
+			return res.status(500).send('Failed to generate QR code');
+		}
 	} catch (error) {
 		return res
 			.status(500)
 			.json({ error: 'Error occured while importing data' });
 	}
-
-	//ako je sve okej onda pošalji na model i dohvati uuid i iz njega izgeneriraj qr kod
 };
 
 exports.getTicket = async function (req, res, next) {
