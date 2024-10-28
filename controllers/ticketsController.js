@@ -49,7 +49,10 @@ exports.generateNewTicket = async function (req, res, next) {
 };
 
 exports.getTicket = async function (req, res, next) {
-	let id = req.params.id;
+	const id = req.params.id;
+	const user = JSON.stringify(req.oidc.user);
+
+	console.log(user);
 
 	try {
 		const ticket = await model.getTicket(id);
