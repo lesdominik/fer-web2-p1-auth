@@ -14,7 +14,7 @@ const checkJwt = jwt({
 			'https://dev-8y8lns3b8lke6ows.us.auth0.com/.well-known/jwks.json',
 	}),
 	audience: 'https://fer-web2-p1-auth.onrender.com/tickets/generate-new',
-	issuer: 'https://dev-8y8lns3b8lke6ows.us.auth0.com',
+	issuer: 'https://dev-8y8lns3b8lke6ows.us.auth0.com/',
 	algorithms: ['RS256'],
 });
 
