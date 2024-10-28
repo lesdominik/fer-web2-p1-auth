@@ -8,7 +8,7 @@ const config = {
 	authRequired: false,
 	auth0Logout: true,
 	secret: process.env.SECRET,
-	baseURL: 'http://localhost:3030',
+	baseURL: 'https://fer-web2-p1-auth.onrender.com',
 	clientID: process.env.CLIENT_ID,
 	issuerBaseURL: 'https://dev-8y8lns3b8lke6ows.us.auth0.com',
 	clientSecret: process.env.CLIENT_SECRET,
